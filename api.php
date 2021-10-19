@@ -152,8 +152,8 @@ class contactsAPI extends CRUDAPI {
 						$relationships = $this->getRelationships('users',$user['id']);
 						$count = 0;
 						foreach($relationships as $id => $relations){
-							var_dump($relations);
 							foreach($relations as $relation){
+								var_dump($relation);
 								if($relation['relationship'] == 'organizations'){
 									$count++;
 									if($relation['link_to'] == $data['organization']){
