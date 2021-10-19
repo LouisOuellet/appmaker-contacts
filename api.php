@@ -15,8 +15,8 @@ class contactsAPI extends CRUDAPI {
 				$contacts = $this->Auth->query('SELECT * FROM `users` WHERE email = ?',$data['email']);
 				if($contacts->numRows() > 0){
 					if((isset($data['relationship'],$data['link_to']))&&($data['relationship'] != '')&&($data['link_to'] != '')){
-						foreach($contacts as $contact){
-							$id = $this->Auth->create('relationships',[
+						foreach($contacts->fetchAll()->all() as $contact){
+							$this->Auth->create('relationships',[
 								'relationship_1' => $data['relationship'],
 								'link_to_1' => $data['link_to'],
 								'relationship_2' => 'users',
