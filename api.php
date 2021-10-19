@@ -157,7 +157,7 @@ class contactsAPI extends CRUDAPI {
 									'relation' => $relation,
 									'id' => $id,
 									'count' => $count,
-									'organization' => $data['organization'],
+									'data' => $data,
 								]);
 								if($relation['relationship'] == 'organizations'){
 									$count++;
