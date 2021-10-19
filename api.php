@@ -4,27 +4,53 @@ class contactsAPI extends CRUDAPI {
 	public function create($request = null, $data = null){
 		if(isset($data)){
 			if(!is_array($data)){ $data = json_decode($data, true); }
-			$data['isActive'] = 'true';
-			$data['isContact'] = 'true';
-			$data['organization'] = $data['link_to'];
-			$data['initials'] = '';
-			if($data['first_name'] != ''){ $data['initials'] .= substr($data['first_name'],0,1).'.'; }
-			if($data['middle_name'] != ''){ $data['initials'] .= substr($data['middle_name'],0,1).'.'; }
-			if($data['last_name'] != ''){ $data['initials'] .= substr($data['last_name'],0,1).'.'; }
-			$create = parent::create('users', $data);
-			if((isset($create['success'],$data['relationship'],$data['link_to']))&&($data['relationship'] != '')&&($data['link_to'] != '')){
-				$id = $this->Auth->create('relationships',[
-					'relationship_1' => $data['relationship'],
-					'link_to_1' => $data['link_to'],
-					'relationship_2' => 'users',
-					'link_to_2' => $create['output']['results']['id'],
-				]);
-				if(is_int($id)){
-					$create['output']['relationship']['raw'] = $this->Auth->read('relationships',$id)->all()[0];
-					$create['output']['relationship']['dom'] = $this->convertToDOM($create['output']['relationship']['raw']);
+			if(isset($data['email']) && !empty($data['email'])){
+				$data['isActive'] = 'true';
+				$data['isContact'] = 'true';
+				$data['organization'] = $data['link_to'];
+				$data['initials'] = '';
+				if($data['first_name'] != ''){ $data['initials'] .= substr($data['first_name'],0,1).'.'; }
+				if($data['middle_name'] != ''){ $data['initials'] .= substr($data['middle_name'],0,1).'.'; }
+				if($data['last_name'] != ''){ $data['initials'] .= substr($data['last_name'],0,1).'.'; }
+				$contacts = $this->Auth->query('SELECT * FROM `users` WHERE email = ?',$data['email']);
+				if($contacts->numRows() > 0){
+					if((isset($data['relationship'],$data['link_to']))&&($data['relationship'] != '')&&($data['link_to'] != '')){
+						foreach($contacts as $contact){
+							$id = $this->Auth->create('relationships',[
+								'relationship_1' => $data['relationship'],
+								'link_to_1' => $data['link_to'],
+								'relationship_2' => 'users',
+								'link_to_2' => $contact['id'],
+							]);
+						}
+						return [
+							"success" => $this->Language->Field["Record successfully linked"],
+							"request" => $request,
+							"data" => $data,
+							"output" => [
+								'results' => $this->convertToDOM($contact[0]),
+								'dom' => $this->convertToDOM($contact[0]),
+								'raw' => $contact[0],
+							],
+						];
+					}
+				} else {
+					$create = parent::create('users', $data);
+					if((isset($create['success'],$data['relationship'],$data['link_to']))&&($data['relationship'] != '')&&($data['link_to'] != '')){
+						$id = $this->Auth->create('relationships',[
+							'relationship_1' => $data['relationship'],
+							'link_to_1' => $data['link_to'],
+							'relationship_2' => 'users',
+							'link_to_2' => $create['output']['results']['id'],
+						]);
+						if(is_int($id)){
+							$create['output']['relationship']['raw'] = $this->Auth->read('relationships',$id)->all()[0];
+							$create['output']['relationship']['dom'] = $this->convertToDOM($create['output']['relationship']['raw']);
+						}
+					}
+					return $create;
 				}
 			}
-			return $create;
 		}
 	}
 
