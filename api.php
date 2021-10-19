@@ -148,18 +148,39 @@ class contactsAPI extends CRUDAPI {
 			if($user != null){
 				$user = $user->all()[0];
 				if((isset($user['isActive']))&&($user['isActive'] == "true")){
-					$user['isActive'] = 'false';
-					$result = $this->Auth->update('users',$user,$user['id']);
-					$results = [
-						"success" => $this->Language->Field["Record successfully deleted"],
-						"request" => 'users',
-						"data" => $data,
-						"output" => [
-							'results' => $result,
-							'record' => $this->convertToDOM($user),
-							'raw' => $user,
-						],
-					];
+					if((isset($user['isUser']))&&($user['isUser'] == "true")){
+						$relationships = $this->getRelationships('users',$user['id']);
+						foreach($relationships as $id => $relations){
+							foreach($relations as $relation){
+								if($relation['relationship'] == 'organizations' && $relation['link_to'] == $data['organization']){
+									$result = $this->Auth->delete('relationships', $id);
+									$results = [
+										"success" => $this->Language->Field["Record successfully removed from organization"],
+										"request" => 'users',
+										"data" => $data,
+										"output" => [
+											'results' => $result,
+											'record' => $this->convertToDOM($user),
+											'raw' => $user,
+										],
+									];
+								}
+							}
+						}
+					} else {
+						$user['isActive'] = 'false';
+						$result = $this->Auth->update('users',$user,$user['id']);
+						$results = [
+							"success" => $this->Language->Field["Record successfully deleted"],
+							"request" => 'users',
+							"data" => $data,
+							"output" => [
+								'results' => $result,
+								'record' => $this->convertToDOM($user),
+								'raw' => $user,
+							],
+						];
+					}
 				} else {
 					// Fetch Relationships
 					$relationships = $this->getRelationships('users',$user['id']);
