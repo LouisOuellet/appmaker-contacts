@@ -23,6 +23,9 @@ class contactsAPI extends CRUDAPI {
 								'relationship_2' => 'users',
 								'link_to_2' => $contact['id'],
 							]);
+							if($contact['isContact'] != $data['isContact']){
+								$this->Auth->query('UPDATE `users` SET `isContact` = ? WHERE `id` = ?', $data['isContact'], $contact['id']);
+							}
 						}
 						return [
 							"success" => $this->Language->Field["Record successfully linked"],
