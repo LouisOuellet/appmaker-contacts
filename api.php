@@ -153,10 +153,14 @@ class contactsAPI extends CRUDAPI {
 						$count = 0;
 						foreach($relationships as $id => $relations){
 							foreach($relations as $relation){
-								var_dump($relation);
 								if($relation['relationship'] == 'organizations'){
 									$count++;
 									if($relation['link_to'] == $data['organization']){
+										var_dump([
+											'relation' => $relation,
+											'id' => $id,
+											'count' => $count,
+										]);
 										$result = $this->Auth->delete('relationships', $id);
 										$results = [
 											"success" => $this->Language->Field["Record successfully removed from organization"],
