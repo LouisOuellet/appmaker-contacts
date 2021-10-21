@@ -32,7 +32,6 @@ class contactsAPI extends CRUDAPI {
 							"request" => $request,
 							"data" => $data,
 							"output" => [
-								'results' => $this->convertToDOM($contacts[0]),
 								'dom' => $this->convertToDOM($contacts[0]),
 								'raw' => $contacts[0],
 							],
@@ -81,7 +80,7 @@ class contactsAPI extends CRUDAPI {
 				"output" => [
 					'headers' => $headers,
 					'raw' => $contacts['raw'],
-					'results' => $contacts['dom'],
+					'dom' => $contacts['dom'],
 				],
 			];
 		} else {
@@ -109,7 +108,7 @@ class contactsAPI extends CRUDAPI {
 						"request" => $request,
 						"data" => $data,
 						"output" => [
-							'results' => $user['dom'],
+							'dom' => $user['dom'],
 							'raw' => $user['raw'],
 						],
 					];
@@ -119,7 +118,7 @@ class contactsAPI extends CRUDAPI {
 						"request" => $request,
 						"data" => $data,
 						"output" => [
-							'results' => $user['raw'],
+							'dom' => $user['raw'],
 						],
 					];
 				}
@@ -162,8 +161,7 @@ class contactsAPI extends CRUDAPI {
 											"request" => 'users',
 											"data" => $data,
 											"output" => [
-												'results' => $result,
-												'record' => $this->convertToDOM($user),
+												'dom' => $this->convertToDOM($user),
 												'raw' => $user,
 											],
 										];
@@ -183,8 +181,7 @@ class contactsAPI extends CRUDAPI {
 							"request" => 'users',
 							"data" => $data,
 							"output" => [
-								'results' => $result,
-								'record' => $this->convertToDOM($user),
+								'dom' => $this->convertToDOM($user),
 								'raw' => $user,
 							],
 						];
@@ -206,8 +203,7 @@ class contactsAPI extends CRUDAPI {
 						"request" => $request,
 						"data" => $data,
 						"output" => [
-							'results' => $result,
-							'record' => $this->convertToDOM($user),
+							'dom' => $this->convertToDOM($user),
 							'raw' => $user,
 						],
 					];
@@ -218,7 +214,7 @@ class contactsAPI extends CRUDAPI {
 					"request" => $request,
 					"data" => $data,
 					"output" => [
-						'results' => $user,
+						'dom' => $user,
 					],
 				];
 			}
