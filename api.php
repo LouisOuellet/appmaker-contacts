@@ -44,7 +44,7 @@ class contactsAPI extends CRUDAPI {
 							'relationship_1' => $data['relationship'],
 							'link_to_1' => $data['link_to'],
 							'relationship_2' => 'users',
-							'link_to_2' => $create['output']['results']['id'],
+							'link_to_2' => $create['output']['dom']['id'],
 						]);
 						if(is_int($id)){
 							$create['output']['relationship']['raw'] = $this->Auth->read('relationships',$id)->all()[0];
