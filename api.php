@@ -17,7 +17,7 @@ class contactsAPI extends CRUDAPI {
 					if((isset($data['relationship'],$data['link_to']))&&($data['relationship'] != '')&&($data['link_to'] != '')){
 						$contacts = $contacts->fetchAll()->all();
 						foreach($contacts as $contact){
-							$this->Auth->create('relationships',[
+							$this->createRelationship([
 								'relationship_1' => $data['relationship'],
 								'link_to_1' => $data['link_to'],
 								'relationship_2' => 'users',
@@ -40,16 +40,13 @@ class contactsAPI extends CRUDAPI {
 				} else {
 					$create = parent::create('users', $data);
 					if((isset($create['success'],$data['relationship'],$data['link_to']))&&($data['relationship'] != '')&&($data['link_to'] != '')){
-						$id = $this->Auth->create('relationships',[
+						$create['output']['relationship']['raw'] = $this->createRelationship([
 							'relationship_1' => $data['relationship'],
 							'link_to_1' => $data['link_to'],
 							'relationship_2' => 'users',
 							'link_to_2' => $create['output']['dom']['id'],
 						]);
-						if(is_int($id)){
-							$create['output']['relationship']['raw'] = $this->Auth->read('relationships',$id)->all()[0];
-							$create['output']['relationship']['dom'] = $this->convertToDOM($create['output']['relationship']['raw']);
-						}
+						$create['output']['relationship']['dom'] = $this->convertToDOM($create['output']['relationship']['raw']);
 					}
 					return $create;
 				}
