@@ -37,8 +37,8 @@ API.Plugins.contacts = {
 		for(var [key, plugin] of Object.entries(['organizations','leads','my_leads','my_prospects','clients','my_clients'])){
 			if(API.Helper.isSet(API.Contents,['Settings','plugins',plugin,'status']) && API.Contents.Settings.plugins[plugin].status){
 				var isInitialized = setInterval(function() {
-					clearInterval(isInitialized);
 					if(API.Helper.isSet(API.Plugins,[plugin,'forms','create'])){
+						clearInterval(isInitialized);
 						API.Plugins[plugin].forms.create.contact = {
 							0:"first_name",
 							1:"middle_name",
