@@ -38,7 +38,7 @@ API.Plugins.contacts = {
 			if(API.initiated){
 				clearInterval(isInitialized);
 				for(var [key, plugin] of Object.entries(['organizations','leads','my_leads','my_prospects','clients','my_clients'])){
-					API.Plugins.tags.customize(plugin);
+					API.Plugins.contacts.customize(plugin);
 				}
 			}
 		}, 100);
