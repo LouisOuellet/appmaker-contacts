@@ -1,14 +1,19 @@
 {
     "repository": {
         "name": "appmaker-contacts",
-        "branch": "pre-release",
+        "branch": "dev",
         "manifest": "\/dist\/data\/manifest.json",
         "host": {
             "git": "https:\/\/github.com\/LouisOuellet\/",
             "raw": "https:\/\/raw.githubusercontent.com\/LouisOuellet\/"
         }
     },
+    "requirements": {
+        "plugin": [
+            "organizations"
+        ]
+    },
     "name": "contacts",
-    "build": 41,
-    "version": "21.10-pre-release"
+    "build": 42,
+    "version": "21.10-dev"
 }

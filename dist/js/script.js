@@ -34,6 +34,14 @@ API.Plugins.contacts = {
 	},
 	init:function(){
 		API.GUI.Sidebar.Nav.add('Contacts', 'development');
+		if(API.Helper.isSet(API.Plugins,['organizations'])){
+			API.Plugins.organizations.form.create.contact = {
+			  0:"first_name",
+			  1:"middle_name",
+			  2:"last_name",
+			  3:"job_title",
+			}
+		}
 	},
 	load:{
 		index:function(){
