@@ -38,7 +38,7 @@ API.Plugins.contacts = {
 			var isInitialized = setInterval(function() {
 				clearInterval(isInitialized);
 				if(API.Helper.isSet(API.Plugins,['organizations'])){
-					API.Plugins.organizations.form.create.contact = {
+					API.Plugins.organizations.forms.create.contact = {
 						0:"first_name",
 						1:"middle_name",
 						2:"last_name",
