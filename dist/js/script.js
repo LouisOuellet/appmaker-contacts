@@ -34,20 +34,28 @@ API.Plugins.contacts = {
 	},
 	init:function(){
 		API.GUI.Sidebar.Nav.add('Contacts', 'development');
-		for(var [key, plugin] of Object.entries(['organizations','leads','my_leads','my_prospects','clients','my_clients'])){
-			if(API.Helper.isSet(API.Contents,['Settings','plugins',plugin,'status']) && API.Contents.Settings.plugins[plugin].status){
-				var isInitialized = setInterval(function() {
-					if(API.Helper.isSet(API.Plugins,[plugin,'forms','create'])){
-						clearInterval(isInitialized);
-						API.Plugins[plugin].forms.create.contact = {
-							0:"first_name",
-							1:"middle_name",
-							2:"last_name",
-							3:"job_title",
-						}
-					}
-				}, 100);
+		var isInitialized = setInterval(function() {
+			if(API.initiated){
+				clearInterval(isInitialized);
+				for(var [key, plugin] of Object.entries(['organizations','leads','my_leads','my_prospects','clients','my_clients'])){
+					API.Plugins.tags.customize(plugin);
+				}
 			}
+		}, 100);
+	},
+	customize:function(plugin){
+		if(API.Helper.isSet(API.Contents,['Settings','plugins',plugin,'status']) && API.Contents.Settings.plugins[plugin].status){
+			var isInitialized = setInterval(function() {
+				if(API.Helper.isSet(API.Plugins,[plugin,'forms','create'])){
+					clearInterval(isInitialized);
+					API.Plugins[plugin].forms.create.contact = {
+						0:"first_name",
+						1:"middle_name",
+						2:"last_name",
+						3:"job_title",
+					}
+				}
+			}, 100);
 		}
 	},
 	load:{
