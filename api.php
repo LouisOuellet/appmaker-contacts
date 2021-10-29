@@ -135,15 +135,27 @@ class contactsAPI extends CRUDAPI {
 	public function delete($request = null, $data = null){
 		if(isset($data)){
 			if(!is_array($data)){ $data = json_decode($data, true); }
-			// Fetch Organization
+			// Fetch Contact
 			$user = $this->Auth->read('contacts',$data['id']);
 			if($user != null){
 				$user = $user->all()[0];
-				if((isset($user['isActive']))&&($user['isActive'] == "true")){
-					$user['isActive'] = 'false';
-					$result = $this->Auth->update('contacts',$user,$user['id']);
+				// Fetch Relationships
+				$relationships = $this->getRelationships('contacts',$user['id']);
+				$count = 0;
+				$link_to = 0;
+				// Delete Relationships
+				if((isset($relationships))&&(!empty($relationships))){
+					foreach($relationships as $id => $relations){
+						foreach($relations as $relation){
+							if($relation['relationship'] == 'organizations'){ $count++; }
+							if(isset($data['link_to']) && $relation['link_to'] == $data['link_to']){ $link_to = $id; }
+						}
+					}
+				}
+				if(isset($data['link_to']) && $count > 1){
+					$this->Auth->delete('relationships',$link_to);
 					$results = [
-						"success" => $this->Language->Field["Record successfully deleted"],
+						"success" => $this->Language->Field["Record successfully unlinked"],
 						"request" => 'contacts',
 						"data" => $data,
 						"output" => [
@@ -152,26 +164,38 @@ class contactsAPI extends CRUDAPI {
 						],
 					];
 				} else {
-					// Fetch Relationships
-					$relationships = $this->getRelationships('contacts',$user['id']);
-					// Delete Relationships
-					if((isset($relationships))&&(!empty($relationships))){
-						foreach($relationships as $id => $links){
-							$this->Auth->delete('relationships',$id);
+					if((isset($user['isActive']))&&($user['isActive'] == "true")){
+						$user['isActive'] = 'false';
+						$result = $this->Auth->update('contacts',$user,$user['id']);
+						$results = [
+							"success" => $this->Language->Field["Record successfully deleted"],
+							"request" => 'contacts',
+							"data" => $data,
+							"output" => [
+								'dom' => $this->convertToDOM($user),
+								'raw' => $user,
+							],
+						];
+					} else {
+						// Delete Relationships
+						if((isset($relationships))&&(!empty($relationships))){
+							foreach($relationships as $id => $links){
+								$this->Auth->delete('relationships',$id);
+							}
 						}
+						// Delete Record
+						$result = $this->Auth->delete('contacts', $user['id']);
+						// Return
+						$results = [
+							"success" => $this->Language->Field["Record successfully deleted"],
+							"request" => $request,
+							"data" => $data,
+							"output" => [
+								'dom' => $this->convertToDOM($user),
+								'raw' => $user,
+							],
+						];
 					}
-					// Delete Record
-					$result = $this->Auth->delete('contacts', $user['id']);
-					// Return
-					$results = [
-						"success" => $this->Language->Field["Record successfully deleted"],
-						"request" => $request,
-						"data" => $data,
-						"output" => [
-							'dom' => $this->convertToDOM($user),
-							'raw' => $user,
-						],
-					];
 				}
 			} else {
 				$results = [
