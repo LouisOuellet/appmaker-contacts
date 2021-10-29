@@ -22,6 +22,10 @@ class contactsAPI extends CRUDAPI {
 								'relationship_2' => 'contacts',
 								'link_to_2' => $contact['id'],
 							]);
+							if($contact['isActive'] != 'true'){
+								$contact['isActive'] = 'false';
+								$result = $this->Auth->update('contacts',$contact,$contact['id']);
+							}
 						}
 						return [
 							"success" => $this->Language->Field["Record successfully linked"],
@@ -152,9 +156,6 @@ class contactsAPI extends CRUDAPI {
 						}
 					}
 				}
-				var_dump($count);
-				var_dump($data['link_to']);
-				var_dump($link_to);
 				if(isset($data['link_to']) && $count > 1){
 					$this->Auth->delete('relationships',$link_to);
 					$results = [
