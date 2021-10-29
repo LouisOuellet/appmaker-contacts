@@ -4,14 +4,14 @@ class contactsAPI extends CRUDAPI {
 	public function create($request = null, $data = null){
 		if(isset($data)){
 			if(!is_array($data)){ $data = json_decode($data, true); }
-			if(isset($data['email']) && !empty($data['email'])){
+			if(isset($data['email'])){
 				$data['isActive'] = 'true';
 				$data['organization'] = $data['link_to'];
 				$data['initials'] = '';
 				if($data['first_name'] != ''){ $data['initials'] .= substr($data['first_name'],0,1).'.'; }
 				if($data['middle_name'] != ''){ $data['initials'] .= substr($data['middle_name'],0,1).'.'; }
 				if($data['last_name'] != ''){ $data['initials'] .= substr($data['last_name'],0,1).'.'; }
-				$contacts = $this->Auth->query('SELECT * FROM `contacts` WHERE email = ?',$data['email']);
+				$contacts = $this->Auth->query('SELECT * FROM `contacts` WHERE `email` = ?',$data['email']);
 				if($contacts->numRows() > 0){
 					if((isset($data['relationship'],$data['link_to']))&&($data['relationship'] != '')&&($data['link_to'] != '')){
 						$contacts = $contacts->fetchAll()->all();
