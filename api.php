@@ -23,7 +23,7 @@ class contactsAPI extends CRUDAPI {
 								'link_to_2' => $contact['id'],
 							]);
 							if($contact['isActive'] != 'true'){
-								$contact['isActive'] = 'false';
+								$contact['isActive'] = 'true';
 								$result = $this->Auth->update('contacts',$contact,$contact['id']);
 							}
 						}
