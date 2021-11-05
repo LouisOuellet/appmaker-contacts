@@ -1,7 +1,7 @@
 {
     "repository": {
         "name": "appmaker-contacts",
-        "branch": "pre-release",
+        "branch": "dev",
         "manifest": "\/dist\/data\/manifest.json",
         "host": {
             "git": "https:\/\/github.com\/LouisOuellet\/",
@@ -17,6 +17,6 @@
         ]
     },
     "name": "contacts",
-    "build": 63,
-    "version": "21.11-pre-release"
+    "build": 64,
+    "version": "21.11-dev"
 }
