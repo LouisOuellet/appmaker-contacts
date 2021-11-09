@@ -1,0 +1,114 @@
+{
+    "contacts": {
+        "id": {
+            "order": 1,
+            "type": "int(11)"
+        },
+        "1": "id",
+        "created": {
+            "order": 2,
+            "type": "datetime"
+        },
+        "2": "created",
+        "modified": {
+            "order": 3,
+            "type": "datetime"
+        },
+        "3": "modified",
+        "owner": {
+            "order": 4,
+            "type": "varchar(255)"
+        },
+        "4": "owner",
+        "updated_by": {
+            "order": 5,
+            "type": "varchar(255)"
+        },
+        "5": "updated_by",
+        "first_name": {
+            "order": 6,
+            "type": "varchar(255)"
+        },
+        "6": "first_name",
+        "middle_name": {
+            "order": 7,
+            "type": "varchar(255)"
+        },
+        "7": "middle_name",
+        "last_name": {
+            "order": 8,
+            "type": "varchar(255)"
+        },
+        "8": "last_name",
+        "initials": {
+            "order": 9,
+            "type": "varchar(255)"
+        },
+        "9": "initials",
+        "job_title": {
+            "order": 10,
+            "type": "varchar(255)"
+        },
+        "10": "job_title",
+        "supervisor": {
+            "order": 11,
+            "type": "varchar(255)"
+        },
+        "11": "supervisor",
+        "gender": {
+            "order": 12,
+            "type": "varchar(255)"
+        },
+        "12": "gender",
+        "birthday": {
+            "order": 13,
+            "type": "date"
+        },
+        "13": "birthday",
+        "email": {
+            "order": 14,
+            "type": "varchar(255)"
+        },
+        "14": "email",
+        "phone": {
+            "order": 15,
+            "type": "varchar(255)"
+        },
+        "15": "phone",
+        "mobile": {
+            "order": 16,
+            "type": "varchar(255)"
+        },
+        "16": "mobile",
+        "office_num": {
+            "order": 17,
+            "type": "varchar(255)"
+        },
+        "17": "office_num",
+        "other_num": {
+            "order": 18,
+            "type": "varchar(255)"
+        },
+        "18": "other_num",
+        "about": {
+            "order": 19,
+            "type": "text"
+        },
+        "19": "about",
+        "picture": {
+            "order": 20,
+            "type": "varchar(255)"
+        },
+        "20": "picture",
+        "organization": {
+            "order": 21,
+            "type": "varchar(255)"
+        },
+        "21": "organization",
+        "isActive": {
+            "order": 22,
+            "type": "varchar(255)"
+        },
+        "22": "isActive"
+    }
+}
