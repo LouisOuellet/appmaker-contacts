@@ -1,0 +1,24 @@
+.addContact{
+	color: #6C757D!important;
+	background-color: #F8F9FA!important;
+}
+.addContact:hover{
+	color: #343A40!important;
+	background-color: #9FA4AA!important;
+}
+.dark-mode .addContact {
+	color: #CCC!important;
+	background-color: #343A40!important;
+}
+.dark-mode .addContact:hover {
+	color: #FFF!important;
+	background-color: #3A4047!important;
+}
+.contactCard .card {
+	color: #454D55!important;
+	background-color: #F8F9FA!important;
+}
+.dark-mode .contactCard .card {
+	color: #CCC!important;
+	background-color: #343A40!important;
+}
