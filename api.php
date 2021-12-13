@@ -12,7 +12,7 @@ class contactsAPI extends CRUDAPI {
 				if($data['middle_name'] != ''){ $data['initials'] .= substr($data['middle_name'],0,1).'.'; }
 				if($data['last_name'] != ''){ $data['initials'] .= substr($data['last_name'],0,1).'.'; }
 				$contacts = $this->Auth->query('SELECT * FROM `contacts` WHERE `email` = ?',$data['email']);
-				if($contacts->numRows() > 0){
+				if($contacts->numRows() > 0 && $data['email'] != ''){
 					if((isset($data['relationship'],$data['link_to']))&&($data['relationship'] != '')&&($data['link_to'] != '')){
 						$contacts = $contacts->fetchAll()->all();
 						foreach($contacts as $contact){
