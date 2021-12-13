@@ -1,28 +1,3 @@
 {
-    "contacts": [
-        {
-            "id": 1,
-            "created": "2021-12-06 09:21:33",
-            "modified": "2021-12-06 09:21:33",
-            "owner": "2",
-            "updated_by": "2",
-            "first_name": "Marco",
-            "middle_name": "",
-            "last_name": "Ouellet",
-            "initials": "M.O.",
-            "job_title": null,
-            "supervisor": null,
-            "gender": null,
-            "birthday": null,
-            "email": "marco@albgroupe.com",
-            "phone": "",
-            "mobile": "(514) 949-9501",
-            "office_num": "",
-            "other_num": "",
-            "about": null,
-            "picture": null,
-            "organization": "1",
-            "isActive": "true"
-        }
-    ]
+    "contacts": []
 }
