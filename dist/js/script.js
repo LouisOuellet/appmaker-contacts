@@ -121,9 +121,9 @@ API.Plugins.contacts = {
 						var html = '';
 						html += '<div data-type="'+defaults.icon+'" data-id="'+dataset.id+'" data-name="'+dataset.name+'" data-date="'+dateItem.getTime()+'">';
 							html += '<i class="fas fa-'+defaults.icon+' bg-'+defaults.color+'"></i>';
-							html += '<div class="layout.timeline-item">';
+							html += '<div class="timeline-item">';
 								html += '<span class="time"><i class="fas fa-clock mr-2"></i><time class="timeago" datetime="'+dataset.created.replace(/ /g, "T")+'">'+dataset.created+'</time></span>';
-								html += '<h3 class="layout.timeline-header">'+dataset.name+' was created</h3>';
+								html += '<h3 class="timeline-header">'+dataset.name+' was created</h3>';
 							html += '</div>';
 						html += '</div>';
 						layout.timeline.find('div.time-label[data-dateus="'+dateUS+'"]').after(html);
