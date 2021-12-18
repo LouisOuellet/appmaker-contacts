@@ -119,7 +119,7 @@ API.Plugins.contacts = {
 					if(layout.timeline.find('div.time-label[data-dateus="'+dateUS+'"]').length > 0){
 						clearInterval(checkExist);
 						var html = '';
-						html += '<div data-type="'+defaults.icon+'" data-id="'+dataset.id+'" data-name="'+dataset.name+'" data-date="'+dateItem.getTime()+'">';
+						html += '<div data-plugin="contacts" data-type="'+defaults.icon+'" data-id="'+dataset.id+'" data-name="'+dataset.name+'" data-date="'+dateItem.getTime()+'">';
 							html += '<i class="fas fa-'+defaults.icon+' bg-'+defaults.color+'"></i>';
 							html += '<div class="timeline-item">';
 								html += '<span class="time"><i class="fas fa-clock mr-2"></i><time class="timeago" datetime="'+dataset.created.replace(/ /g, "T")+'">'+dataset.created+'</time></span>';
@@ -134,14 +134,16 @@ API.Plugins.contacts = {
 							return new Date($(b).data("date")) - new Date($(a).data("date"));
 						});
 						layout.timeline.append(items);
-						element.find('i').first().addClass('pointer');
-						element.find('i').first().off().click(function(){
-							value = element.attr('data-name').toLowerCase();
-							layout.content.contacts.find('input').val(value);
-							layout.tabs.contacts.find('a').tab('show');
-							layout.content.contacts.find('[data-csv]').hide();
-							layout.content.contacts.find('[data-csv*="'+value+'"]').each(function(){ $(this).show(); });
-						});
+						if(API.Helper.isSet(layout,['tabs','contacts'])){
+							element.find('i').first().addClass('pointer');
+							element.find('i').first().off().click(function(){
+								value = element.attr('data-name').toLowerCase();
+								layout.content.contacts.find('input').val(value);
+								layout.tabs.contacts.find('a').tab('show');
+								layout.content.contacts.find('[data-csv]').hide();
+								layout.content.contacts.find('[data-csv*="'+value+'"]').each(function(){ $(this).show(); });
+							});
+						}
 						if(callback != null){ callback(element); }
 					}
 				}, 100);
@@ -155,7 +157,7 @@ API.Plugins.contacts = {
 				var defaults = {field: "name"};
 				if(API.Helper.isSet(options,['field'])){ defaults.field = options.field; }
 				API.GUI.Layouts.details.tab(data,layout,{icon:"fas fa-address-book",text:API.Contents.Language["Contacts"]},function(data,layout,tab,content){
-					layout.timeline.find('.time-label').first().find('div.btn-group').append('<button class="btn btn-secondary" data-table="contacts">'+API.Contents.Language['Contacts']+'</button>');
+					layout.timeline.find('.time-label').first().find('div.btn-group').append('<button class="btn btn-secondary" data-plugin="contacts">'+API.Contents.Language['Contacts']+'</button>');
 					layout.content.contacts = content;
 					layout.tabs.contacts = tab;
 					content.addClass('p-3');
