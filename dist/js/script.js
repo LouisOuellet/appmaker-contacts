@@ -111,13 +111,13 @@ API.Plugins.contacts = {
 			var defaults = {icon: API.Plugins.contacts.Timeline.icon,color: "secondary"};
 			if(API.Helper.isSet(options,['icon'])){ defaults.icon = options.icon; }
 			if(API.Helper.isSet(options,['color'])){ defaults.color = options.color; }
-			var dateItem = new Date(dataset.created);
-			var dateUS = dateItem.toLocaleDateString('en-US', {day: 'numeric', month: 'short', year: 'numeric'}).replace(/ /g, '-').replace(/,/g, '');
-			API.Builder.Timeline.add.date(layout.timeline,dataset.created);
-			var checkExist = setInterval(function() {
-				if(layout.timeline.find('div.time-label[data-dateus="'+dateUS+'"]').length > 0){
-					clearInterval(checkExist);
-					if(typeof dataset.id !== 'undefined'){
+			if(typeof dataset.id !== 'undefined'){
+				var dateItem = new Date(dataset.created);
+				var dateUS = dateItem.toLocaleDateString('en-US', {day: 'numeric', month: 'short', year: 'numeric'}).replace(/ /g, '-').replace(/,/g, '');
+				API.Builder.Timeline.add.date(layout.timeline,dataset.created);
+				var checkExist = setInterval(function() {
+					if(layout.timeline.find('div.time-label[data-dateus="'+dateUS+'"]').length > 0){
+						clearInterval(checkExist);
 						var html = '';
 						html += '<div data-type="'+defaults.icon+'" data-id="'+dataset.id+'" data-name="'+dataset.name+'" data-date="'+dateItem.getTime()+'">';
 							html += '<i class="fas fa-'+defaults.icon+' bg-'+defaults.color+'"></i>';
@@ -134,18 +134,18 @@ API.Plugins.contacts = {
 							return new Date($(b).data("date")) - new Date($(a).data("date"));
 						});
 						layout.timeline.append(items);
-						// element.find('i').first().addClass('pointer');
-						// element.find('i').first().off().click(function(){
-						// 	value = element.attr('data-name').toLowerCase();
-						// 	layout.content.contacts.find('input').val(value);
-						// 	layout.tabs.contacts.find('a').tab('show');
-						// 	layout.content.contacts.find('[data-csv]').hide();
-						// 	layout.content.contacts.find('[data-csv*="'+value+'"]').each(function(){ $(this).show(); });
-						// });
+						element.find('i').first().addClass('pointer');
+						element.find('i').first().off().click(function(){
+							value = element.attr('data-name').toLowerCase();
+							layout.content.contacts.find('input').val(value);
+							layout.tabs.contacts.find('a').tab('show');
+							layout.content.contacts.find('[data-csv]').hide();
+							layout.content.contacts.find('[data-csv*="'+value+'"]').each(function(){ $(this).show(); });
+						});
 						if(callback != null){ callback(element); }
 					}
-				}
-			}, 100);
+				}, 100);
+			}
 		},
 	},
 	Layouts:{
