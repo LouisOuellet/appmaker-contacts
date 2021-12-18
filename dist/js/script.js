@@ -193,7 +193,7 @@ API.Plugins.contacts = {
 					}
 					if(API.Helper.isSet(data,['relations','contacts'])){
 						for(var [id, relation] of Object.entries(data.relations.contacts)){
-							if(relation.isActive||API.Auth.validate('custom', 'b3_contacts_isActive', 1)){
+							if(relation.isActive||API.Auth.validate('custom', 'contacts_isActive', 1)){
 								API.Plugins.contacts.Layouts.details.GUI.contact(relation,layout);
 							}
 						}
@@ -297,6 +297,7 @@ API.Plugins.contacts = {
 				},
 			},
 			Events:function(dataset,layout,options = {},callback = null){
+				var url = new URL(window.location.href);
 				if(options instanceof Function){ callback = options; options = {}; }
 				var defaults = {field: "name"};
 				if(API.Helper.isSet(options,['field'])){ defaults.field = options.field; }
@@ -316,7 +317,7 @@ API.Plugins.contacts = {
 				});
 				if(API.Auth.validate('plugins', 'contacts', 2)){
 					contacts.find('.addContact').off().click(function(){
-						API.CRUD.create.show({ plugin:'contacts', keys:skeleton, set:{isActive:'true',relationship:'b3',link_to:dataset.this.raw.id} },function(created,user){
+						API.CRUD.create.show({ plugin:'contacts', keys:skeleton, set:{isActive:'true',relationship:url.searchParams.get("p"),link_to:dataset.this.raw.id} },function(created,user){
 							if(created){
 								user.dom.name = '';
 								if((user.dom.first_name != '')&&(user.dom.first_name != null)){ if(user.dom.name != ''){user.dom.name += ' ';} user.dom.name += user.dom.first_name; }
@@ -393,7 +394,7 @@ API.Plugins.contacts = {
 								header.find('button[data-control="hide"]').remove();
 								header.find('button[data-control="update"]').remove();
 								body.html('<div class="row"></div>');
-								API.Builder.input(body.find('div.row'), 'setVows', dataset.setVows,{plugin:'b3',type:'switch'}, function(input){
+								API.Builder.input(body.find('div.row'), 'setVows', dataset.setVows,{plugin:'contacts',type:'switch'}, function(input){
 									input.wrap('<div class="col-md-6 py-3"></div>');
 									modal.on('shown.bs.modal',function(e){
 									  input.find('input').last().bootstrapSwitch('state', dataset.setVows);
@@ -421,11 +422,11 @@ API.Plugins.contacts = {
 						case"delete":
 							contact.link_to = dataset.this.raw.id;
 							API.CRUD.delete.show({ keys:contact,key:'name', modal:true, plugin:'contacts' },function(user){
-								if(contacts.find('[data-id="'+contact.id+'"]').find('.ribbon-wrapper').length > 0 || !API.Auth.validate('custom', 'b3_contacts_isActive', 1)){
+								if(contacts.find('[data-id="'+contact.id+'"]').find('.ribbon-wrapper').length > 0 || !API.Auth.validate('custom', 'contacts_isActive', 1)){
 									contacts.find('[data-id="'+contact.id+'"]').remove();
 									layout.timeline.find('[data-type="address-card"][data-id="'+contact.id+'"]').remove();
 								}
-								if(contact.isActive && API.Auth.validate('custom', 'b3_contacts_isActive', 1)){
+								if(contact.isActive && API.Auth.validate('custom', 'contacts_isActive', 1)){
 									contact.isActive = user.isActive;
 									API.Helper.set(dataset,['relations','contacts',contact.id,'isActive'],contact.isActive);
 									contacts.find('[data-id="'+contact.id+'"] .card').prepend('<div class="ribbon-wrapper ribbon-xl"><div class="ribbon bg-danger text-xl">'+API.Contents.Language['Inactive']+'</div></div>');
