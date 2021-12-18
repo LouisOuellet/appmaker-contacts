@@ -119,7 +119,7 @@ API.Plugins.contacts = {
 					clearInterval(checkExist);
 					if(typeof dataset.id !== 'undefined'){
 						var html = '';
-						html += '<div data-type="'+defaults.icon+'" data-id="'+dataset.id+'" data-organization="'+dataset.organization+'" data-isEmployee="'+dataset.isEmployee+'" data-isContact="'+dataset.isContact+'" data-name="'+dataset.name+'" data-date="'+dateItem.getTime()+'">';
+						html += '<div data-type="'+defaults.icon+'" data-id="'+dataset.id+'" data-name="'+dataset.name+'" data-date="'+dateItem.getTime()+'">';
 							html += '<i class="fas fa-'+defaults.icon+' bg-'+defaults.color+'"></i>';
 							html += '<div class="layout.timeline-item">';
 								html += '<span class="time"><i class="fas fa-clock mr-2"></i><time class="timeago" datetime="'+dataset.created.replace(/ /g, "T")+'">'+dataset.created+'</time></span>';
@@ -134,14 +134,14 @@ API.Plugins.contacts = {
 							return new Date($(b).data("date")) - new Date($(a).data("date"));
 						});
 						layout.timeline.append(items);
-						element.find('i').first().addClass('pointer');
-						element.find('i').first().off().click(function(){
-							value = element.attr('data-name').toLowerCase();
-							layout.content.contacts.find('input').val(value);
-							layout.tabs.contacts.find('a').tab('show');
-							layout.content.contacts.find('[data-csv]').hide();
-							layout.content.contacts.find('[data-csv*="'+value+'"]').each(function(){ $(this).show(); });
-						});
+						// element.find('i').first().addClass('pointer');
+						// element.find('i').first().off().click(function(){
+						// 	value = element.attr('data-name').toLowerCase();
+						// 	layout.content.contacts.find('input').val(value);
+						// 	layout.tabs.contacts.find('a').tab('show');
+						// 	layout.content.contacts.find('[data-csv]').hide();
+						// 	layout.content.contacts.find('[data-csv*="'+value+'"]').each(function(){ $(this).show(); });
+						// });
 						if(callback != null){ callback(element); }
 					}
 				}
