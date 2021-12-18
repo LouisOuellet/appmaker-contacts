@@ -327,16 +327,7 @@ API.Plugins.contacts = {
 								API.Helper.set(dataset,['relations','contacts',user.dom.id],user.dom);
 								API.Plugins.contacts.Layouts.details.GUI.contact(user.dom,layout);
 								API.Plugins.contacts.Layouts.details.Events(dataset,layout);
-								API.Builder.Timeline.add.contact(layout.timeline,user.dom,'address-card','secondary',function(item){
-									dataset.find('i').first().addClass('pointer');
-									dataset.find('i').first().off().click(function(){
-										value = dataset.attr('data-name').toLowerCase();
-										layout.content.contacts.find('input').val(value);
-										layout.tabs.contacts.find('a').tab('show');
-										layout.content.contacts.find('[data-csv]').hide();
-										layout.content.contacts.find('[data-csv*="'+value+'"]').each(function(){ $(this).show(); });
-									});
-								});
+								API.Plugins.contacts.Timeline.object(dataset,layout);
 							}
 						});
 					});
