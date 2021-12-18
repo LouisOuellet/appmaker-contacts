@@ -150,7 +150,7 @@ API.Plugins.contacts = {
 	},
 	Layouts:{
 		details:{
-			Tab:function(data,layout,options = {},callback = null){
+			tab:function(data,layout,options = {},callback = null){
 				if(options instanceof Function){ callback = options; options = {}; }
 				var defaults = {field: "name"};
 				if(API.Helper.isSet(options,['field'])){ defaults.field = options.field; }
