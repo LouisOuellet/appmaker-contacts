@@ -123,7 +123,7 @@ API.Plugins.contacts = {
 							html += '<i class="fas fa-'+defaults.icon+' bg-'+defaults.color+'"></i>';
 							html += '<div class="timeline-item">';
 								html += '<span class="time"><i class="fas fa-clock mr-2"></i><time class="timeago" datetime="'+dataset.created.replace(/ /g, "T")+'">'+dataset.created+'</time></span>';
-								html += '<h3 class="timeline-header">'+dataset.name+' was created</h3>';
+								html += '<h3 class="timeline-header border-0">'+dataset.name+' was created</h3>';
 							html += '</div>';
 						html += '</div>';
 						layout.timeline.find('div.time-label[data-dateus="'+dateUS+'"]').after(html);
@@ -157,7 +157,7 @@ API.Plugins.contacts = {
 				var defaults = {field: "name"};
 				if(API.Helper.isSet(options,['field'])){ defaults.field = options.field; }
 				API.GUI.Layouts.details.tab(data,layout,{icon:"fas fa-address-book",text:API.Contents.Language["Contacts"]},function(data,layout,tab,content){
-					layout.timeline.find('.time-label').first().find('div.btn-group').append('<button class="btn btn-secondary" data-plugin="contacts">'+API.Contents.Language['Contacts']+'</button>');
+					layout.timeline.find('.time-label').first().find('div.btn-group').append('<button class="btn btn-secondary" data-trigger="contacts">'+API.Contents.Language['Contacts']+'</button>');
 					layout.content.contacts = content;
 					layout.tabs.contacts = tab;
 					content.addClass('p-3');
