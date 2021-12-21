@@ -127,7 +127,7 @@ API.Plugins.contacts = {
 							html += '</div>';
 						html += '</div>';
 						layout.timeline.find('div.time-label[data-dateus="'+dateUS+'"]').after(html);
-						var element = layout.timeline.find('[data-plugin][data-id="'+dataset.id+'"]');
+						var element = layout.timeline.find('[data-plugin="contacts"][data-id="'+dataset.id+'"]');
 						element.find('time').timeago();
 						var items = layout.timeline.children('div').detach().get();
 						items.sort(function(a, b){
@@ -137,7 +137,7 @@ API.Plugins.contacts = {
 						if(API.Helper.isSet(layout,['tabs','contacts'])){
 							element.find('i').first().addClass('pointer');
 							element.find('i').first().off().click(function(){
-								value = API.Helper.toString(element.attr('data-name')).toLowerCase();
+								value = element.attr('data-name').toLowerCase();
 								layout.content.contacts.find('input').val(value);
 								layout.tabs.contacts.find('a').tab('show');
 								layout.content.contacts.find('[data-csv]').hide();
