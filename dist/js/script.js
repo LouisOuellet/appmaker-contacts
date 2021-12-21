@@ -137,7 +137,7 @@ API.Plugins.contacts = {
 						if(API.Helper.isSet(layout,['tabs','contacts'])){
 							element.find('i').first().addClass('pointer');
 							element.find('i').first().off().click(function(){
-								value = element.attr('data-name').toLowerCase();
+								value = API.Helper.toString(element.attr('data-name')).toLowerCase();
 								layout.content.contacts.find('input').val(value);
 								layout.tabs.contacts.find('a').tab('show');
 								layout.content.contacts.find('[data-csv]').hide();
