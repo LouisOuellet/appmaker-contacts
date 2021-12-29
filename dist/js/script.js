@@ -109,8 +109,7 @@ API.Plugins.contacts = {
 		object:function(dataset,layout,options = {},callback = null){
 			if(options instanceof Function){ callback = options; options = {}; }
 			var defaults = {icon: API.Plugins.contacts.Timeline.icon,color: "secondary"};
-			if(API.Helper.isSet(options,['icon'])){ defaults.icon = options.icon; }
-			if(API.Helper.isSet(options,['color'])){ defaults.color = options.color; }
+			for(var [key, option] of Object.entries(options)){ if(API.Helper.isSet(defaults,[key])){ defaults[key] = option; } }
 			if(typeof dataset.id !== 'undefined'){
 				var dateItem = new Date(dataset.created);
 				var dateUS = dateItem.toLocaleDateString('en-US', {day: 'numeric', month: 'short', year: 'numeric'}).replace(/ /g, '-').replace(/,/g, '');
@@ -156,7 +155,7 @@ API.Plugins.contacts = {
 			tab:function(data,layout,options = {},callback = null){
 				if(options instanceof Function){ callback = options; options = {}; }
 				var defaults = {field: "name"};
-				if(API.Helper.isSet(options,['field'])){ defaults.field = options.field; }
+				for(var [key, option] of Object.entries(options)){ if(API.Helper.isSet(defaults,[key])){ defaults[key] = option; } }
 				API.GUI.Layouts.details.tab(data,layout,{icon:"fas fa-address-book",text:API.Contents.Language["Contacts"]},function(data,layout,tab,content){
 					API.Builder.Timeline.add.filter(layout,'contacts','Contacts');
 					layout.content.contacts = content;
@@ -301,7 +300,7 @@ API.Plugins.contacts = {
 				var url = new URL(window.location.href);
 				if(options instanceof Function){ callback = options; options = {}; }
 				var defaults = {field: "name"};
-				if(API.Helper.isSet(options,['field'])){ defaults.field = options.field; }
+				for(var [key, option] of Object.entries(options)){ if(API.Helper.isSet(defaults,[key])){ defaults[key] = option; } }
 				var skeleton = {};
 				for(var [field, settings] of Object.entries(API.Contents.Settings.Structure.contacts)){ skeleton[field] = ''; }
 				var contacts = layout.content.contacts.find('div.row').eq(1);
