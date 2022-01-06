@@ -203,8 +203,10 @@ API.Plugins.contacts = {
 				} else {
 					if(API.Helper.isSet(data,['relations','contacts'])){
 						for(var [id, relation] of Object.entries(data.relations.contacts)){
-							if(relation.isActive||API.Auth.validate('custom', 'contacts_isActive', 1)){
-								API.Plugins.contacts.Layouts.details.GUI.contact(relation,layout);
+							if(td.find('div.contactCard[data-id="'+relation.id+'"]').length <= 0){
+								if(relation.isActive||API.Auth.validate('custom', 'contacts_isActive', 1)){
+									API.Plugins.contacts.Layouts.details.GUI.contact(relation,layout);
+								}
 							}
 						}
 					}
