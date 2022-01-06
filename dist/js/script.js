@@ -156,41 +156,51 @@ API.Plugins.contacts = {
 				if(options instanceof Function){ callback = options; options = {}; }
 				var defaults = {field: "name"};
 				for(var [key, option] of Object.entries(options)){ if(API.Helper.isSet(defaults,[key])){ defaults[key] = option; } }
-				API.GUI.Layouts.details.tab(data,layout,{icon:"fas fa-address-book",text:API.Contents.Language["Contacts"]},function(data,layout,tab,content){
-					API.Builder.Timeline.add.filter(layout,'contacts','Contacts');
-					layout.content.contacts = content;
-					layout.tabs.contacts = tab;
-					content.addClass('p-3');
-					var html = '';
-					html += '<div class="row">';
-						html += '<div class="col-md-12 mb-3">';
-							html += '<div class="input-group">';
-								html += '<input type="text" class="form-control">';
-								html += '<div class="input-group-append pointer" data-action="clear">';
-									html += '<span class="input-group-text"><i class="fas fa-times" aria-hidden="true"></i></span>';
-								html += '</div>';
-								html += '<div class="input-group-append">';
-									html += '<span class="input-group-text"><i class="icon icon-search mr-1"></i>'+API.Contents.Language["Search"]+'</span>';
-								html += '</div>';
-							html += '</div>';
-						html += '</div>';
-					html += '</div>';
-					html += '<div class="row"></div>';
-					content.append(html);
-					area = content.find('div.row').last();
-					if(API.Auth.validate('plugin', 'contacts', 2)){
+				if(!API.Helper.isSet(layout,['content','contacts'])){
+					API.GUI.Layouts.details.tab(data,layout,{icon:"fas fa-address-book",text:API.Contents.Language["Contacts"]},function(data,layout,tab,content){
+						API.Builder.Timeline.add.filter(layout,'contacts','Contacts');
+						layout.content.contacts = content;
+						layout.tabs.contacts = tab;
+						content.addClass('p-3');
 						var html = '';
-						html += '<div class="col-sm-12 col-md-6">';
-							html += '<div class="card pointer addContact">';
-								html += '<div class="card-body py-4">';
-									html += '<div class="text-center p-5">';
-										html += '<i class="fas fa-plus-circle fa-10x mt-3 mb-2"></i>';
+						html += '<div class="row">';
+							html += '<div class="col-md-12 mb-3">';
+								html += '<div class="input-group">';
+									html += '<input type="text" class="form-control">';
+									html += '<div class="input-group-append pointer" data-action="clear">';
+										html += '<span class="input-group-text"><i class="fas fa-times" aria-hidden="true"></i></span>';
+									html += '</div>';
+									html += '<div class="input-group-append">';
+										html += '<span class="input-group-text"><i class="icon icon-search mr-1"></i>'+API.Contents.Language["Search"]+'</span>';
 									html += '</div>';
 								html += '</div>';
 							html += '</div>';
 						html += '</div>';
-						area.append(html);
-					}
+						html += '<div class="row"></div>';
+						content.append(html);
+						area = content.find('div.row').last();
+						if(API.Auth.validate('plugin', 'contacts', 2)){
+							var html = '';
+							html += '<div class="col-sm-12 col-md-6">';
+								html += '<div class="card pointer addContact">';
+									html += '<div class="card-body py-4">';
+										html += '<div class="text-center p-5">';
+											html += '<i class="fas fa-plus-circle fa-10x mt-3 mb-2"></i>';
+										html += '</div>';
+									html += '</div>';
+								html += '</div>';
+							html += '</div>';
+							area.append(html);
+						}
+						if(API.Helper.isSet(data,['relations','contacts'])){
+							for(var [id, relation] of Object.entries(data.relations.contacts)){
+								if(relation.isActive||API.Auth.validate('custom', 'contacts_isActive', 1)){
+									API.Plugins.contacts.Layouts.details.GUI.contact(relation,layout);
+								}
+							}
+						}
+					});
+				} else {
 					if(API.Helper.isSet(data,['relations','contacts'])){
 						for(var [id, relation] of Object.entries(data.relations.contacts)){
 							if(relation.isActive||API.Auth.validate('custom', 'contacts_isActive', 1)){
@@ -198,7 +208,7 @@ API.Plugins.contacts = {
 							}
 						}
 					}
-				});
+				}
 				API.Plugins.contacts.Layouts.details.Events(data,layout);
 				if(callback != null){ callback(dataset,layout); }
 			},
